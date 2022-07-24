@@ -11,7 +11,7 @@ class FinanceInfoCardView: UIView {
     // MARK: - Main content
     private lazy var contentVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
-            hStack,
+            keyValueHStack,
             progressBar
         ])
         stack.axis = .vertical
@@ -21,7 +21,7 @@ class FinanceInfoCardView: UIView {
     }()
 
     // MARK: - KeyValue Content
-    private lazy var hStack: UIStackView = {
+    private lazy var keyValueHStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
             expensesView,
             divisor,
