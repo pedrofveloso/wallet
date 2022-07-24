@@ -8,9 +8,15 @@
 import UIKit
 
 class KeyValueView: UIView {
-    private let keyLabel = UILabel()
+    private let keyLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .callout)
+        return label
+    }()
+    
     private let valueLabel: UILabel = {
         let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .headline)
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.75
         return label
@@ -29,7 +35,7 @@ class KeyValueView: UIView {
         
         //FIXME: Remove fixed values
         keyLabel.text = "Key"
-        valueLabel.text = "$1000123112254121231230"
+        valueLabel.text = "$1000"
 
         buildViewCode()
     }
