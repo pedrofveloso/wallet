@@ -10,7 +10,7 @@ import UIKit
 typealias StatementTableViewProtocol = UITableViewDataSource & UITableViewDelegate
 
 class StatementTableView: UIView {
-    private let cellID = "statementCellIdentifier"
+    static let cellID = "statementCellIdentifier"
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
