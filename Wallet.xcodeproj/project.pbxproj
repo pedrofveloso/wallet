@@ -13,6 +13,10 @@
 		359636AD288BC5BD00DBF5E6 /* WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359636AC288BC5BD00DBF5E6 /* WalletTests.swift */; };
 		359636B7288BC5BD00DBF5E6 /* WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359636B6288BC5BD00DBF5E6 /* WalletUITests.swift */; };
 		359636B9288BC5BD00DBF5E6 /* WalletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359636B8288BC5BD00DBF5E6 /* WalletUITestsLaunchTests.swift */; };
+		35967003288C3AB300D5A737 /* FinanceInfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967002288C3AB300D5A737 /* FinanceInfoCardView.swift */; };
+		35967006288C3AEB00D5A737 /* ViewCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967005288C3AEB00D5A737 /* ViewCodable.swift */; };
+		35967008288C3DFA00D5A737 /* KeyValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967007288C3DFA00D5A737 /* KeyValueView.swift */; };
+		3596700B288C3FD700D5A737 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3596700A288C3FD700D5A737 /* UIView+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +47,10 @@
 		359636B2288BC5BD00DBF5E6 /* WalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		359636B6288BC5BD00DBF5E6 /* WalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletUITests.swift; sourceTree = "<group>"; };
 		359636B8288BC5BD00DBF5E6 /* WalletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		35967002288C3AB300D5A737 /* FinanceInfoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinanceInfoCardView.swift; sourceTree = "<group>"; };
+		35967005288C3AEB00D5A737 /* ViewCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCodable.swift; sourceTree = "<group>"; };
+		35967007288C3DFA00D5A737 /* KeyValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueView.swift; sourceTree = "<group>"; };
+		3596700A288C3FD700D5A737 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +138,8 @@
 		359636C6288BC6C700DBF5E6 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				35967009288C3F8D00D5A737 /* Extensions */,
+				35967004288C3AD600D5A737 /* Protocols */,
 				35966FFE288C369600D5A737 /* Statement */,
 			);
 			path = Source;
@@ -138,8 +148,34 @@
 		35966FFE288C369600D5A737 /* Statement */ = {
 			isa = PBXGroup;
 			children = (
+				35967001288C3A9E00D5A737 /* Components */,
 			);
 			path = Statement;
+			sourceTree = "<group>";
+		};
+		35967001288C3A9E00D5A737 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				35967002288C3AB300D5A737 /* FinanceInfoCardView.swift */,
+				35967007288C3DFA00D5A737 /* KeyValueView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		35967004288C3AD600D5A737 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				35967005288C3AEB00D5A737 /* ViewCodable.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		35967009288C3F8D00D5A737 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3596700A288C3FD700D5A737 /* UIView+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +308,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3596700B288C3FD700D5A737 /* UIView+Extensions.swift in Sources */,
+				35967008288C3DFA00D5A737 /* KeyValueView.swift in Sources */,
+				35967003288C3AB300D5A737 /* FinanceInfoCardView.swift in Sources */,
+				35967006288C3AEB00D5A737 /* ViewCodable.swift in Sources */,
 				35963696288BC5BC00DBF5E6 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
