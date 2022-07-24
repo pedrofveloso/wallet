@@ -18,18 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     func initializeWallet() -> Bool{
-        let root = UIViewController()
-        
-        // For test purposes
-        let view = FinanceInfoCardView()
-        root.view.addSubview(view)
-        
-        view
-            .top(to: root.view.safeAreaLayoutGuide.topAnchor)
-            .horizontals(to: root.view)
-        // End test
-        
-        window?.rootViewController = root
+        window?.rootViewController = StatementViewController()
         window?.makeKeyAndVisible()
 
         return true

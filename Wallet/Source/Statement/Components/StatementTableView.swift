@@ -33,6 +33,10 @@ class StatementTableView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override var intrinsicContentSize: CGSize {
+        tableView.contentSize
+    }
 }
 
 extension StatementTableView: ViewCodable {
@@ -48,5 +52,8 @@ extension StatementTableView: ViewCodable {
     func buildAdditionalConfigurations() {
         backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
+        
+        addCustomBorder()
+        
     }
 }

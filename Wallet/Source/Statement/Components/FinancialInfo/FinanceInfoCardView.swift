@@ -102,8 +102,7 @@ extension FinanceInfoCardView: ViewCodable {
         backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
 
-        layer.borderColor = UIColor.separator.cgColor
-        layer.borderWidth = 1.0
+        addCustomBorder()
         
         expensesView.setKeyLabel(with: Strings.expenses.rawValue)
         incomeView.setKeyLabel(with: Strings.income.rawValue)
