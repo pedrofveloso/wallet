@@ -25,7 +25,7 @@ class FinanceInfoCardView: UIView {
         let stack = UIStackView(arrangedSubviews: [
             expensesView,
             divisor,
-            incomesView,
+            incomeView,
             divisor,
             balanceView
         ])
@@ -35,7 +35,7 @@ class FinanceInfoCardView: UIView {
     }()
     
     private let expensesView = KeyValueView()
-    private let incomesView = KeyValueView()
+    private let incomeView = KeyValueView()
     private let balanceView = KeyValueView()
     
     private var divisor: UIView {
@@ -48,7 +48,6 @@ class FinanceInfoCardView: UIView {
     // MARK: - Progress content
     private let progressBar: UIProgressView = {
         let view =  UIProgressView(progressViewStyle: .bar)
-        view.progress = 0.5
         view.backgroundColor = .systemGray5
         view.clipsToBounds = true
         view.layer.cornerRadius = 4.0
@@ -65,6 +64,22 @@ class FinanceInfoCardView: UIView {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func set(expenses value: String) {
+        expensesView.setValueLabel(with: value)
+    }
+
+    func set(income value: String) {
+        incomeView.setValueLabel(with: value)
+    }
+    
+    func set(balance value: String) {
+        balanceView.setValueLabel(with: value)
+    }
+    
+    func set(progress value: Float) {
+        progressBar.progress = value
     }
 }
 
@@ -88,5 +103,18 @@ extension FinanceInfoCardView: ViewCodable {
 
         layer.borderColor = UIColor.separator.cgColor
         layer.borderWidth = 1.0
+        
+        expensesView.setKeyLabel(with: Strings.expenses.rawValue)
+        incomeView.setKeyLabel(with: Strings.income.rawValue)
+        balanceView.setKeyLabel(with: Strings.balance.rawValue)
+    }
+}
+
+private extension FinanceInfoCardView {
+    // I would propably use SwiftGen in a "real" project.
+    enum Strings: String {
+        case expenses = "Expenses"
+        case income = "Income"
+        case balance = "Balance"
     }
 }

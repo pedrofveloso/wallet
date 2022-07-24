@@ -156,8 +156,7 @@
 		35967001288C3A9E00D5A737 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				35967002288C3AB300D5A737 /* FinanceInfoCardView.swift */,
-				35967007288C3DFA00D5A737 /* KeyValueView.swift */,
+				35967010288DA43F00D5A737 /* FinancialInfo */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -176,6 +175,15 @@
 				3596700A288C3FD700D5A737 /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		35967010288DA43F00D5A737 /* FinancialInfo */ = {
+			isa = PBXGroup;
+			children = (
+				35967002288C3AB300D5A737 /* FinanceInfoCardView.swift */,
+				35967007288C3DFA00D5A737 /* KeyValueView.swift */,
+			);
+			path = FinancialInfo;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
