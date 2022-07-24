@@ -11,9 +11,12 @@ class FinanceInfoCardView: UIView {
     // MARK: - Main content
     private lazy var contentVStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [
-            hStack
-            // progress
+            hStack,
+            progressBar
         ])
+        stack.axis = .vertical
+        stack.spacing = 24.0
+        
         return stack
     }()
 
@@ -43,6 +46,15 @@ class FinanceInfoCardView: UIView {
     }
     
     // MARK: - Progress content
+    private let progressBar: UIProgressView = {
+        let view =  UIProgressView(progressViewStyle: .bar)
+        view.progress = 0.5
+        view.backgroundColor = .systemGray5
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 4.0
+
+        return view
+    }()
     
     // MARK: - Inits
     override init(frame: CGRect = .zero) {
@@ -64,11 +76,14 @@ extension FinanceInfoCardView: ViewCodable {
     
     func buildConstraints() {
         contentVStack
-            .verticals(to: self, constant: 32)
-            .horizontals(to: self, constant: 16)
+            .edges(to: self, constant: 32)
+        
+        progressBar
+            .height(8.0)
     }
     
     func buildAdditionalConfigurations() {
+        backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
 
         layer.borderColor = UIColor.separator.cgColor
