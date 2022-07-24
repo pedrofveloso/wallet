@@ -10,6 +10,15 @@ import UIKit
 extension UIView {
     // MARK: - Size
     @discardableResult
+    func height(_ constant: CGFloat) -> UIView {
+        translatesAutoresizingMaskIntoConstraints = false
+
+        heightAnchor.constraint(equalToConstant: constant).isActive = true
+        
+        return self
+    }
+    
+    @discardableResult
     func width(_ constant: CGFloat) -> UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
