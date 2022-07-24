@@ -8,6 +8,7 @@
 import UIKit
 
 class KeyValueView: UIView {
+    // MARK: - Properties
     private let keyLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .callout)
@@ -30,13 +31,9 @@ class KeyValueView: UIView {
         return stack
     }()
     
+    // MARK: - Inits
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-        
-        //FIXME: Remove fixed values
-        keyLabel.text = "Key"
-        valueLabel.text = "$1000"
-
         buildViewCode()
     }
     
@@ -45,6 +42,7 @@ class KeyValueView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Exposed methods
     func setKeyLabel(with text: String) {
         keyLabel.text = text
     }
@@ -54,6 +52,7 @@ class KeyValueView: UIView {
     }
 }
 
+// MARK: - View codable methods
 extension KeyValueView: ViewCodable {
     func buildHierarchy() {
         addSubview(vStack)

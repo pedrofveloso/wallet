@@ -66,6 +66,7 @@ class FinanceInfoCardView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Exposed methods
     func set(expenses value: String) {
         expensesView.setValueLabel(with: value)
     }
@@ -110,6 +111,7 @@ extension FinanceInfoCardView: ViewCodable {
     }
 }
 
+// MARK: - Strings
 private extension FinanceInfoCardView {
     // I would propably use SwiftGen in a "real" project.
     enum Strings: String {
