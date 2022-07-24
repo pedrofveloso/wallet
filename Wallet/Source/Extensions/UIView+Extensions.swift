@@ -7,6 +7,16 @@
 
 import UIKit
 
+// MARK: - Style
+extension UIView {
+    func addCustomBorder() {
+        layer.borderColor = UIColor.separator.cgColor
+        layer.borderWidth = 1.0
+        layer.cornerRadius = 16.0
+    }
+}
+
+// MARK: - Constraints
 extension UIView {
     // MARK: - Size
     @discardableResult
