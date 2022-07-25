@@ -8,11 +8,12 @@
 import UIKit
 
 class StatementViewController: UIViewController {
-    // MARK: - UI Elements
+    // MARK: - UI Components
     private let financeInfoCardView = FinanceInfoCardView()
-    private lazy var statementTableView = StatementTableView(parent: self)
+    private lazy var transactionsTableView = TransactionsTableView(parent: self)
     
     // MARK: - Properties
+    private var presenter = StatementPresenter()
 
     // MARK: - Inits
     override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
@@ -28,10 +29,14 @@ class StatementViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         buildViewCode()
-        
-        financeInfoCardView.set(income: "$0")
-        financeInfoCardView.set(expenses: "$0")
-        financeInfoCardView.set(balance: "$0")
+    }
+    
+    // MARK: - Private functions
+    private func updateFinanceInfoCardView() {
+        financeInfoCardView.set(expenses: presenter.totalExpenses.asCurrency)
+        financeInfoCardView.set(income: presenter.totalIncome.asCurrency)
+        financeInfoCardView.set(balance: presenter.balance.asCurrency)
+        financeInfoCardView.set(progress: presenter.balanceProgress)
     }
 }
 
@@ -39,7 +44,7 @@ class StatementViewController: UIViewController {
 extension StatementViewController: ViewCodable {
     func buildHierarchy() {
         view.addSubview(financeInfoCardView)
-        view.addSubview(statementTableView)
+        view.addSubview(transactionsTableView)
     }
     
     func buildConstraints() {
@@ -47,31 +52,61 @@ extension StatementViewController: ViewCodable {
             .top(to: view.safeAreaLayoutGuide.topAnchor, constant: 24.0)
             .horizontals(to: view, constant: 24.0)
         
-        statementTableView
+        transactionsTableView
             .top(to: financeInfoCardView.bottomAnchor, constant: 24.0)
             .horizontals(to: view, constant: 24.0)
-        
-        statementTableView.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            .bottom(to: view.safeAreaLayoutGuide.bottomAnchor, constant: 24.0, makeLessThanOrEqual: true)
     }
     
     func buildAdditionalConfigurations() {
         view.backgroundColor = .systemBackground
+        updateFinanceInfoCardView()
     }    
 }
 
 // MARK: - Statement table view methods
 extension StatementViewController: StatementTableViewProtocol {
+    // MARK: - Section
+    func numberOfSections(in tableView: UITableView) -> Int {
+        presenter.models.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        presenter.models[section].date.asString
+    }
+    
+    // MARK: - Cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        presenter.models[section].transactions.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: StatementTableView.cellID) ?? UITableViewCell(style: .value1, reuseIdentifier: StatementTableView.cellID)
+        let cell = tableView.dequeueReusableCell(withIdentifier: TransactionsTableView.cellID) ?? UITableViewCell(style: .value1, reuseIdentifier: TransactionsTableView.cellID)
         
-        cell.textLabel?.text = "Text"
-        cell.detailTextLabel?.text = "\(indexPath.row)"
+        let transactionInfo = presenter.transactionInfo(for: indexPath)
+
+        cell.textLabel?.text = transactionInfo.name
+        cell.detailTextLabel?.text = transactionInfo.amount
         cell.selectionStyle = .none
         
         return cell
+    }
+    
+    // MARK: - Deletion
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            presenter.removeTransaction(indexPath: indexPath)
+
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            
+            if presenter.removeSectionIfNeeded(section: indexPath.section) {
+                tableView.deleteSections(.init(integer: indexPath.section), with: .automatic)
+            }
+
+            transactionsTableView.invalidateIntrinsicContentSize()
+            updateFinanceInfoCardView()
+            tableView.endUpdates()
+        }
     }
 }

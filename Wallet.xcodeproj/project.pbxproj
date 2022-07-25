@@ -17,8 +17,11 @@
 		35967006288C3AEB00D5A737 /* ViewCodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967005288C3AEB00D5A737 /* ViewCodable.swift */; };
 		35967008288C3DFA00D5A737 /* KeyValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967007288C3DFA00D5A737 /* KeyValueView.swift */; };
 		3596700B288C3FD700D5A737 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3596700A288C3FD700D5A737 /* UIView+Extensions.swift */; };
-		3596701B288E020600D5A737 /* StatementTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3596701A288E020600D5A737 /* StatementTableView.swift */; };
+		3596701B288E020600D5A737 /* TransactionsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3596701A288E020600D5A737 /* TransactionsTableView.swift */; };
 		3596701D288E042F00D5A737 /* StatementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3596701C288E042F00D5A737 /* StatementViewController.swift */; };
+		3596701F288E0AF000D5A737 /* StatementPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3596701E288E0AF000D5A737 /* StatementPresenter.swift */; };
+		35967023288E0B2C00D5A737 /* StatementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967022288E0B2C00D5A737 /* StatementModel.swift */; };
+		35967025288E2C8800D5A737 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967024288E2C8800D5A737 /* Formatters.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,8 +56,11 @@
 		35967005288C3AEB00D5A737 /* ViewCodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewCodable.swift; sourceTree = "<group>"; };
 		35967007288C3DFA00D5A737 /* KeyValueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueView.swift; sourceTree = "<group>"; };
 		3596700A288C3FD700D5A737 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		3596701A288E020600D5A737 /* StatementTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatementTableView.swift; sourceTree = "<group>"; };
+		3596701A288E020600D5A737 /* TransactionsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionsTableView.swift; sourceTree = "<group>"; };
 		3596701C288E042F00D5A737 /* StatementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatementViewController.swift; sourceTree = "<group>"; };
+		3596701E288E0AF000D5A737 /* StatementPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementPresenter.swift; sourceTree = "<group>"; };
+		35967022288E0B2C00D5A737 /* StatementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementModel.swift; sourceTree = "<group>"; };
+		35967024288E2C8800D5A737 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +158,8 @@
 		35966FFE288C369600D5A737 /* Statement */ = {
 			isa = PBXGroup;
 			children = (
+				35967022288E0B2C00D5A737 /* StatementModel.swift */,
+				3596701E288E0AF000D5A737 /* StatementPresenter.swift */,
 				3596701C288E042F00D5A737 /* StatementViewController.swift */,
 				35967001288C3A9E00D5A737 /* Components */,
 			);
@@ -161,7 +169,7 @@
 		35967001288C3A9E00D5A737 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				3596701A288E020600D5A737 /* StatementTableView.swift */,
+				3596701A288E020600D5A737 /* TransactionsTableView.swift */,
 				35967010288DA43F00D5A737 /* FinancialInfo */,
 			);
 			path = Components;
@@ -179,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				3596700A288C3FD700D5A737 /* UIView+Extensions.swift */,
+				35967024288E2C8800D5A737 /* Formatters.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -322,8 +331,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3596701F288E0AF000D5A737 /* StatementPresenter.swift in Sources */,
 				3596700B288C3FD700D5A737 /* UIView+Extensions.swift in Sources */,
-				3596701B288E020600D5A737 /* StatementTableView.swift in Sources */,
+				35967025288E2C8800D5A737 /* Formatters.swift in Sources */,
+				3596701B288E020600D5A737 /* TransactionsTableView.swift in Sources */,
+				35967023288E0B2C00D5A737 /* StatementModel.swift in Sources */,
 				35967008288C3DFA00D5A737 /* KeyValueView.swift in Sources */,
 				35967003288C3AB300D5A737 /* FinanceInfoCardView.swift in Sources */,
 				3596701D288E042F00D5A737 /* StatementViewController.swift in Sources */,

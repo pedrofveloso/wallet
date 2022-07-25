@@ -1,5 +1,5 @@
 //
-//  StatementTableView.swift
+//  TransactionsTableView.swift
 //  Wallet
 //
 //  Created by Pedro Veloso on 24/07/22.
@@ -9,7 +9,7 @@ import UIKit
 
 typealias StatementTableViewProtocol = UITableViewDataSource & UITableViewDelegate
 
-class StatementTableView: UIView {
+class TransactionsTableView: UIView {
     static let cellID = "statementCellIdentifier"
     
     private lazy var tableView: UITableView = {
@@ -39,7 +39,7 @@ class StatementTableView: UIView {
     }
 }
 
-extension StatementTableView: ViewCodable {
+extension TransactionsTableView: ViewCodable {
     func buildHierarchy() {
         addSubview(tableView)
     }
