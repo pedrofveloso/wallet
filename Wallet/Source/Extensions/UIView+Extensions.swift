@@ -13,6 +13,7 @@ extension UIView {
         layer.borderColor = UIColor.separator.cgColor
         layer.borderWidth = 1.0
         layer.cornerRadius = 16.0
+        clipsToBounds = true
     }
 }
 
@@ -48,10 +49,14 @@ extension UIView {
     }
     
     @discardableResult
-    func bottom(to anchor: NSLayoutYAxisAnchor, constant: CGFloat = 0.0) -> UIView {
+    func bottom(to anchor: NSLayoutYAxisAnchor, constant: CGFloat = 0.0, makeLessThanOrEqual: Bool = false) -> UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
-        bottomAnchor.constraint(equalTo: anchor, constant: -constant).isActive = true
+        if makeLessThanOrEqual {
+            bottomAnchor.constraint(lessThanOrEqualTo: anchor, constant: -constant).isActive = true 
+        } else {
+            bottomAnchor.constraint(equalTo: anchor, constant: -constant).isActive = true
+        }
         
         return self
     }
