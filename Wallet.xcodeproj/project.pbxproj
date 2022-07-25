@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		352ED8F9288F0F7600065E19 /* StatementPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352ED8F8288F0F7600065E19 /* StatementPresenterTests.swift */; };
 		35963696288BC5BC00DBF5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35963695288BC5BC00DBF5E6 /* AppDelegate.swift */; };
 		3596369F288BC5BC00DBF5E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3596369E288BC5BC00DBF5E6 /* Assets.xcassets */; };
 		359636A2288BC5BC00DBF5E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 359636A0288BC5BC00DBF5E6 /* LaunchScreen.storyboard */; };
-		359636AD288BC5BD00DBF5E6 /* WalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359636AC288BC5BD00DBF5E6 /* WalletTests.swift */; };
 		359636B7288BC5BD00DBF5E6 /* WalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359636B6288BC5BD00DBF5E6 /* WalletUITests.swift */; };
 		359636B9288BC5BD00DBF5E6 /* WalletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359636B8288BC5BD00DBF5E6 /* WalletUITestsLaunchTests.swift */; };
 		35967003288C3AB300D5A737 /* FinanceInfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967002288C3AB300D5A737 /* FinanceInfoCardView.swift */; };
@@ -42,13 +42,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		352ED8F8288F0F7600065E19 /* StatementPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementPresenterTests.swift; sourceTree = "<group>"; };
 		35963692288BC5BC00DBF5E6 /* Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35963695288BC5BC00DBF5E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3596369E288BC5BC00DBF5E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		359636A1288BC5BC00DBF5E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		359636A3288BC5BC00DBF5E6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		359636A8288BC5BD00DBF5E6 /* WalletTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalletTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		359636AC288BC5BD00DBF5E6 /* WalletTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTests.swift; sourceTree = "<group>"; };
 		359636B2288BC5BD00DBF5E6 /* WalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		359636B6288BC5BD00DBF5E6 /* WalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletUITests.swift; sourceTree = "<group>"; };
 		359636B8288BC5BD00DBF5E6 /* WalletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -121,7 +121,7 @@
 		359636AB288BC5BD00DBF5E6 /* WalletTests */ = {
 			isa = PBXGroup;
 			children = (
-				359636AC288BC5BD00DBF5E6 /* WalletTests.swift */,
+				352ED8F8288F0F7600065E19 /* StatementPresenterTests.swift */,
 			);
 			path = WalletTests;
 			sourceTree = "<group>";
@@ -272,6 +272,7 @@
 					};
 					359636A7288BC5BD00DBF5E6 = {
 						CreatedOnToolsVersion = 13.4.1;
+						LastSwiftMigration = 1340;
 						TestTargetID = 35963691288BC5BC00DBF5E6;
 					};
 					359636B1288BC5BD00DBF5E6 = {
@@ -348,7 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				359636AD288BC5BD00DBF5E6 /* WalletTests.swift in Sources */,
+				352ED8F9288F0F7600065E19 /* StatementPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,14 +562,21 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pedrofveloso.WalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Wallet.app/Wallet";
@@ -580,10 +588,16 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pedrofveloso.WalletTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

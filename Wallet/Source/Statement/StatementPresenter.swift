@@ -9,7 +9,7 @@ import Foundation
 
 final class StatementPresenter {
     // MARK: - Properties
-    private(set) var models: [StatementModel] {
+    var models: [StatementModel] {
         didSet {
             totalIncome = calculateTotalAmount(for: .income)
             totalExpenses = calculateTotalAmount(for: .expense)
@@ -31,7 +31,7 @@ final class StatementPresenter {
     
     var balanceProgress: Float {
         let number = NSDecimalNumber(decimal: totalExpenses / totalIncome)
-        return totalExpenses.isZero ? .zero :  number.floatValue
+        return totalExpenses.isZero ? .zero : number.floatValue
     }
     
     // MARK: - Exposed methods
