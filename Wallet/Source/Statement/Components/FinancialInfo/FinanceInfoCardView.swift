@@ -80,7 +80,9 @@ class FinanceInfoCardView: UIView {
     }
     
     func set(progress value: Float) {
-        progressBar.progress = value
+        DispatchQueue.main.async {
+            self.progressBar.setProgress(value, animated: true)
+        }
     }
 }
 
@@ -92,7 +94,9 @@ extension FinanceInfoCardView: ViewCodable {
     
     func buildConstraints() {
         contentVStack
-            .edges(to: self, constant: 32)
+            .top(to: topAnchor, constant: 24.0)
+            .horizontals(to: self, constant: 32.0)
+            .bottom(to: bottomAnchor, constant: 32.0)
         
         progressBar
             .height(8.0)
@@ -102,8 +106,7 @@ extension FinanceInfoCardView: ViewCodable {
         backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
 
-        layer.borderColor = UIColor.separator.cgColor
-        layer.borderWidth = 1.0
+        addCustomBorder()
         
         expensesView.setKeyLabel(with: Strings.expenses.rawValue)
         incomeView.setKeyLabel(with: Strings.income.rawValue)
