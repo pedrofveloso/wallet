@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		352ED8F9288F0F7600065E19 /* StatementPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352ED8F8288F0F7600065E19 /* StatementPresenterTests.swift */; };
+		352ED8FC288F284000065E19 /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352ED8FB288F284000065E19 /* AddTransactionViewController.swift */; };
+		352ED901288F837D00065E19 /* CustomFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352ED900288F837D00065E19 /* CustomFieldView.swift */; };
 		35963696288BC5BC00DBF5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35963695288BC5BC00DBF5E6 /* AppDelegate.swift */; };
 		3596369F288BC5BC00DBF5E6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3596369E288BC5BC00DBF5E6 /* Assets.xcassets */; };
 		359636A2288BC5BC00DBF5E6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 359636A0288BC5BC00DBF5E6 /* LaunchScreen.storyboard */; };
@@ -43,6 +45,8 @@
 
 /* Begin PBXFileReference section */
 		352ED8F8288F0F7600065E19 /* StatementPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementPresenterTests.swift; sourceTree = "<group>"; };
+		352ED8FB288F284000065E19 /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
+		352ED900288F837D00065E19 /* CustomFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomFieldView.swift; sourceTree = "<group>"; };
 		35963692288BC5BC00DBF5E6 /* Wallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Wallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35963695288BC5BC00DBF5E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3596369E288BC5BC00DBF5E6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -88,6 +92,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		352ED8FA288F280B00065E19 /* Add Transaction */ = {
+			isa = PBXGroup;
+			children = (
+				352ED8FB288F284000065E19 /* AddTransactionViewController.swift */,
+				352ED8FD288F556900065E19 /* Components */,
+			);
+			path = "Add Transaction";
+			sourceTree = "<group>";
+		};
+		352ED8FD288F556900065E19 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				352ED900288F837D00065E19 /* CustomFieldView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		35963689288BC5BC00DBF5E6 = {
 			isa = PBXGroup;
 			children = (
@@ -148,6 +169,7 @@
 		359636C6288BC6C700DBF5E6 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				352ED8FA288F280B00065E19 /* Add Transaction */,
 				35967009288C3F8D00D5A737 /* Extensions */,
 				35967004288C3AD600D5A737 /* Protocols */,
 				35966FFE288C369600D5A737 /* Statement */,
@@ -186,8 +208,8 @@
 		35967009288C3F8D00D5A737 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3596700A288C3FD700D5A737 /* UIView+Extensions.swift */,
 				35967024288E2C8800D5A737 /* Formatters.swift */,
+				3596700A288C3FD700D5A737 /* UIView+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -332,7 +354,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				352ED901288F837D00065E19 /* CustomFieldView.swift in Sources */,
 				3596701F288E0AF000D5A737 /* StatementPresenter.swift in Sources */,
+				352ED8FC288F284000065E19 /* AddTransactionViewController.swift in Sources */,
 				3596700B288C3FD700D5A737 /* UIView+Extensions.swift in Sources */,
 				35967025288E2C8800D5A737 /* Formatters.swift in Sources */,
 				3596701B288E020600D5A737 /* TransactionsTableView.swift in Sources */,
