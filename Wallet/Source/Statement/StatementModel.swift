@@ -21,7 +21,7 @@ extension StatementModel {
 }
 
 extension StatementModel.Transaction {
-    enum Category {
+    enum Category: String, CaseIterable {
         case expense, income
     }
 }
