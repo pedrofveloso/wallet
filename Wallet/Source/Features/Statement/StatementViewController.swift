@@ -23,11 +23,13 @@ class StatementViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    private var presenter = StatementPresenter()
+    private var presenter: StatementPresenter
 
     // MARK: - Inits
-    override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    init(datasource: DatasourceProtocol) {
+        presenter = .init(datasource: datasource)
+
+        super.init(nibName: nil, bundle: nil)
     }
     
     @available(*, unavailable)
@@ -143,7 +145,7 @@ extension StatementViewController: StatementTableViewProtocol {
 extension StatementViewController: AddTransactionDelegate {
     func didAdd(transaction: StatementModel.Transaction) {
         let isNewDate = presenter.shouldAddNewSection(for: transaction)
-        presenter.add(transaction, isNewDate: isNewDate)
+        presenter.addTransaction(transaction, isNewDate: isNewDate)
         
         transactionsTableView.tableView.beginUpdates()
         

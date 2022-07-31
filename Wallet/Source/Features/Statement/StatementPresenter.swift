@@ -9,10 +9,16 @@ import Foundation
 
 final class StatementPresenter {
     // MARK: - Properties
+    private let datasource: DatasourceProtocol
+    
     private(set) var models: [StatementModel] {
         didSet {
             totalIncome = calculateTotalAmount(for: .income)
             totalExpenses = calculateTotalAmount(for: .expense)
+            
+            DispatchQueue.main.async {
+                self.datasource.saveStatementInfo(self.models)
+            }
         }
     }
 
@@ -20,8 +26,9 @@ final class StatementPresenter {
     private(set) lazy var totalIncome: Decimal = calculateTotalAmount(for: .income)
     
     // MARK: - Init
-    init(models: [StatementModel] = mock) {
-        self.models = models
+    init(datasource: DatasourceProtocol) {
+        self.datasource = datasource
+        self.models = datasource.fetchStatementInfo()
     }
     
     // MARK: - Computed variables
@@ -68,7 +75,7 @@ final class StatementPresenter {
         return false
     }
     
-    func add(_ transaction: StatementModel.Transaction, isNewDate: Bool) {
+    func addTransaction(_ transaction: StatementModel.Transaction, isNewDate: Bool) {
         isNewDate ? addNewStatementEntry(with: transaction) : addNewTransaction(transaction)
     }
 }

@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 private extension AppDelegate {
     func initializeWallet() -> Bool{
-        window?.rootViewController = StatementViewController()
+        window?.rootViewController = StatementViewController(datasource: Datasource.shared)
         window?.makeKeyAndVisible()
 
         return true
