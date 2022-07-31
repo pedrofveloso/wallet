@@ -12,6 +12,7 @@ class KeyValueView: UIView {
     private let keyLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .callout)
+        label.setContentCompressionResistancePriority(.required, for: .horizontal)
         return label
     }()
     

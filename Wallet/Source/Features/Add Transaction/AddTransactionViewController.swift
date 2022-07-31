@@ -188,7 +188,7 @@ extension AddTransactionViewController: ViewCodable {
         
         amountSelector
             .top(to: descriptionTextField.bottomAnchor, constant: 16.0)
-            .width(128.0)
+            .width(144.0)
             .centerX(to: contentView.centerXAnchor)
         
         submitButton
