@@ -13,6 +13,23 @@ protocol CustomFieldView: UITextFieldDelegate {
 }
 
 final class CustomTextFieldView: UITextField {
+    // MARK: - UI Elements
+    var upSelector: UIButton {
+        let button = UIButton()
+        button.setImage(.init(systemName: "chevron.up"), for: .normal)
+        button.addTarget(self, action: #selector(didSelectUp), for: .touchUpInside)
+        
+        return button
+    }
+    
+    var downSelector: UIButton {
+        let button = UIButton()
+        button.setImage(.init(systemName: "chevron.down"), for: .normal)
+        button.addTarget(self, action: #selector(didSelectDown), for: .touchUpInside)
+        
+        return button
+    }
+    
     // MARK: - Properties
     weak var customDelegate: CustomFieldView? {
         didSet {
@@ -23,6 +40,7 @@ final class CustomTextFieldView: UITextField {
     var textEditingEnabled = true
     
     private let selector: SelectorType
+
     private let textInsets = UIEdgeInsets(top: 0.0, left: 8.0, bottom: 0.0, right: 12.0)
     
     // MARK: - Overriden methods
@@ -85,13 +103,27 @@ extension CustomTextFieldView: ViewCodable {
         translatesAutoresizingMaskIntoConstraints = false
         addCustomBorder(radius: 8.0)
         
-        buildSelectorIfNeeded()
+        buildSelectorsIfNeeded()
+        addDefaultToolbar()
     }
 }
 
 // MARK: - Private methods
 private extension CustomTextFieldView {
-    func buildSelectorIfNeeded() {
+    func addDefaultToolbar() {
+        let toolbar = UIToolbar()
+        toolbar.barStyle = .default
+        toolbar.sizeToFit()
+
+        let flexibleSpace = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        let ok = UIBarButtonItem(title: Strings.okButton.rawValue, style: .done, target: self, action: #selector(dismissToolbar))
+        
+        toolbar.setItems([flexibleSpace, ok], animated: true)
+        inputAccessoryView = toolbar
+    }
+    
+    func buildSelectorsIfNeeded() {
         switch selector {
         case .single:
             rightView = downSelector
@@ -110,22 +142,6 @@ private extension CustomTextFieldView {
         }
     }
     
-    var upSelector: UIButton {
-        let button = UIButton()
-        button.setImage(.init(systemName: "chevron.up"), for: .normal)
-        button.addTarget(self, action: #selector(didSelectUp), for: .touchUpInside)
-        
-        return button
-    }
-    
-    var downSelector: UIButton {
-        let button = UIButton()
-        button.setImage(.init(systemName: "chevron.down"), for: .normal)
-        button.addTarget(self, action: #selector(didSelectDown), for: .touchUpInside)
-        
-        return button
-    }
-    
     @objc
     func didSelectUp() {
         customDelegate?.didSelectUp(selector: self)
@@ -135,11 +151,24 @@ private extension CustomTextFieldView {
     func didSelectDown() {
         customDelegate?.didSelectDown(selector: self)
     }
+    
+    @objc
+    func dismissToolbar() {
+        resignFirstResponder()
+    }
 }
 
 // MARK: - Selector type
 extension CustomTextFieldView {
     enum SelectorType {
         case none, single, double
+    }
+}
+
+// MARK: - Strings
+private extension CustomTextFieldView {
+    enum Strings: String {
+        case okButton = "OK"
+        case cancelButton = "Cancel"
     }
 }
