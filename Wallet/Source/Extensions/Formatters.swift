@@ -18,7 +18,7 @@ extension Date {
 extension Decimal {
     var asCurrency: String {
         let formatter = NumberFormatter()
-        formatter.decimalSeparator = "."
+        formatter.locale = .init(identifier: "en_US")
         
         let amount = formatter.number(from: self.description) ?? .init(value: 0.0)
         
