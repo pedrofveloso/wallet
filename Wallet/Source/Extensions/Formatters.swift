@@ -18,9 +18,12 @@ extension Date {
 extension Decimal {
     var asCurrency: String {
         let formatter = NumberFormatter()
-        let amount = formatter.number(from: "\(self)") ?? .init(value: 0.0)
+        formatter.decimalSeparator = "."
         
-        formatter.numberStyle = .currency
+        let amount = formatter.number(from: self.description) ?? .init(value: 0.0)
+        
+        formatter.currencySymbol = "$"
+        formatter.numberStyle = .currencyAccounting
         
         return formatter.string(from: amount) ?? "0"
     }
