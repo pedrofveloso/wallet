@@ -125,14 +125,16 @@ extension StatementViewController: StatementTableViewProtocol {
             presenter.removeTransaction(indexPath: indexPath)
 
             tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-            
+
             if presenter.removeSectionIfNeeded(section: indexPath.section) {
                 tableView.deleteSections(.init(integer: indexPath.section), with: .automatic)
             }
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
 
             transactionsTableView.invalidateIntrinsicContentSize()
             updateFinanceInfoCardView()
+
             tableView.endUpdates()
         }
     }
@@ -140,13 +142,20 @@ extension StatementViewController: StatementTableViewProtocol {
 
 extension StatementViewController: AddTransactionDelegate {
     func didAdd(transaction: StatementModel.Transaction) {
-        presenter.add(transaction)
+        let isNewDate = presenter.shouldAddNewSection(for: transaction)
+        presenter.add(transaction, isNewDate: isNewDate)
         
         transactionsTableView.tableView.beginUpdates()
-        //TODO: Insert new section if needed (based on current date)
+        
+        if isNewDate {
+            transactionsTableView.tableView.insertSections(.init(integer: 0), with: .automatic)
+        }
+
         transactionsTableView.tableView.insertRows(at: [.init(row: 0, section: 0)], with: .automatic)
+        
         transactionsTableView.invalidateIntrinsicContentSize()
         updateFinanceInfoCardView()
+
         transactionsTableView.tableView.endUpdates()
     }
 }

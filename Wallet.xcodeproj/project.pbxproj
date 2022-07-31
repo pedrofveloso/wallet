@@ -175,10 +175,9 @@
 		359636C6288BC6C700DBF5E6 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				352ED8FA288F280B00065E19 /* Add Transaction */,
 				35967009288C3F8D00D5A737 /* Extensions */,
+				35D2B5832896ED02008B74D4 /* Features */,
 				35967004288C3AD600D5A737 /* Protocols */,
-				35966FFE288C369600D5A737 /* Statement */,
 			);
 			path = Source;
 			sourceTree = "<group>";
@@ -227,6 +226,15 @@
 				35967007288C3DFA00D5A737 /* KeyValueView.swift */,
 			);
 			path = FinancialInfo;
+			sourceTree = "<group>";
+		};
+		35D2B5832896ED02008B74D4 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				352ED8FA288F280B00065E19 /* Add Transaction */,
+				35966FFE288C369600D5A737 /* Statement */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
