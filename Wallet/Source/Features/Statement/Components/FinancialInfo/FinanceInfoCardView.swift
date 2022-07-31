@@ -95,7 +95,7 @@ extension FinanceInfoCardView: ViewCodable {
     func buildConstraints() {
         contentVStack
             .top(to: topAnchor, constant: 24.0)
-            .horizontals(to: self, constant: 32.0)
+            .horizontals(to: self, constant: 16.0)
             .bottom(to: bottomAnchor, constant: 32.0)
         
         progressBar
