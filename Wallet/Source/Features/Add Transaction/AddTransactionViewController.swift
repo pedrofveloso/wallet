@@ -116,8 +116,9 @@ private extension AddTransactionViewController {
     @objc
     func didChangeTransactionTypeSelector() {
         let selectedIndex = transactionTypePickerView.selectedRow(inComponent: 0)
-
         transactionTypeSelector.text = presenter.changedType(with: selectedIndex)
+
+        validateForm()
     }
 
     @objc

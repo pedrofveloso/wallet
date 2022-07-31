@@ -14,7 +14,8 @@ class StatementPresenterTests: XCTestCase {
     // MARK: - Total income and expenses property observers test
     func testTotalIncomeAndExpenses_whenTransactionIsRemoved_shouldRecalculateTheirValues() throws {
         // Given
-        sut = .init(models: mockSingle(income: 100.0, expense: 50.0))
+        let datasource = mockDatasource(with: mockSingle(income: 100.0, expense: 50.0))
+        sut = .init(datasource: datasource)
         
         // Then
         try assertTotalIncomeAndExpenses(income: 100.0, expenses: 50.0)
@@ -34,7 +35,8 @@ class StatementPresenterTests: XCTestCase {
     // MARK: - Balance tests
     func testBalance_whenIncomeIsGreatherThanExpenses_shouldReturnCorrectPositiveValue() throws {
         // Given
-        sut = .init(models: mockSingle(income: 100.0, expense: 50.0))
+        let datasourceMock = mockDatasource(with: mockSingle(income: 100.0, expense: 50.0))
+        sut = .init(datasource: datasourceMock)
         
         // When
         let balance = try XCTUnwrap(sut?.balance)
@@ -45,7 +47,8 @@ class StatementPresenterTests: XCTestCase {
 
     func testBalance_whenIncomeIsLessThanExpenses_shouldReturnCorrectNegativeValue() throws {
         // Given
-        sut = .init(models: mockSingle(income: 50.0, expense: 100.0))
+        let datasource = mockDatasource(with: mockSingle(income: 50.0, expense: 100.0))
+        sut = .init(datasource: datasource)
         
         // When
         let balance = try XCTUnwrap(sut?.balance)
@@ -56,7 +59,8 @@ class StatementPresenterTests: XCTestCase {
     
     func testBalance_whenIncomeIsEqualToExpenses_shouldReturnZero() throws {
         // Given
-        sut = .init(models: mockSingle(income: 100.0, expense: 100.0))
+        let datasource = mockDatasource(with: mockSingle(income: 100.0, expense: 100.0))
+        sut = .init(datasource: datasource)
         
         // When
         let balance = try XCTUnwrap(sut?.balance)
@@ -68,7 +72,8 @@ class StatementPresenterTests: XCTestCase {
     // MARK: - Balance progress tests
     func testBalanceProgress_whenExpensesIsZero_shouldReturnZero() throws {
         // Given
-        sut = .init(models: mockSingle(income: 10.0, expense: 0.0))
+        let datasource = mockDatasource(with: mockSingle(income: 10.0, expense: 0.0))
+        sut = .init(datasource: datasource)
         
         // When
         let progress = try XCTUnwrap(sut?.balanceProgress)
@@ -79,7 +84,8 @@ class StatementPresenterTests: XCTestCase {
     
     func testBalanceProgress_whenExpensesIsNotZero_shouldReturnCorrectProgressValue() throws {
         // Given
-        sut = .init(models: mockSingle(income: 10.0, expense: 5.0))
+        let datasource = mockDatasource(with: mockSingle(income: 10.0, expense: 5.0))
+        sut = .init(datasource: datasource)
         
         // When
         let progress = try XCTUnwrap(sut?.balanceProgress)
@@ -91,7 +97,8 @@ class StatementPresenterTests: XCTestCase {
     // MARK: - Transaction info tests
     func testTransactionInfo_whenTypeIsIncome_shouldReturnCorrectNameAndPositiveAmountValue() throws {
         // Given
-        sut = .init(models: mockSingle(income: 100.0, expense: 300.0))
+        let datasource = mockDatasource(with: mockSingle(income: 100.0, expense: 300.0))
+        sut = .init(datasource: datasource)
         
         // When
         let info = try XCTUnwrap(sut?.transactionInfo(for: .init(row: 0, section: 0)))
@@ -103,7 +110,8 @@ class StatementPresenterTests: XCTestCase {
     
     func testTransactionInfo_whenTypeIsExpense_shouldReturnCorrectNameAndNegativeAmountValue() throws {
         // Given
-        sut = .init(models: mockSingle(income: 100.0, expense: 300.0))
+        let datasource = mockDatasource(with: mockSingle(income: 100.0, expense: 300.0))
+        sut = .init(datasource: datasource)
         
         // When
         let info = try XCTUnwrap(sut?.transactionInfo(for: .init(row: 1, section: 0)))
@@ -116,7 +124,8 @@ class StatementPresenterTests: XCTestCase {
     // MARK: - Remove section if needed tests
     func testRemoveSectionIfNeeded_whenTransactionsIsEmpty_shouldRemoveSectionAndReturnTrue() throws {
         // Given
-        sut = .init(models: [.init(date: Date(), transactions: [])])
+        let datasource = mockDatasource(with: [.init(date: Date(), transactions: [])])
+        sut = .init(datasource: datasource)
         
         // When
         let removed = try XCTUnwrap(sut?.removeSectionIfNeeded(section: 0))
@@ -127,7 +136,8 @@ class StatementPresenterTests: XCTestCase {
     
     func testRemoveSectionIfNeeded_whenTransactionsIsNotEmpty_shouldReturnFalse() throws {
         // Given
-        sut = .init(models: mockSingle(income: 53.0, expense: 58.0))
+        let datasource = mockDatasource(with: mockSingle(income: 53.0, expense: 58.0))
+        sut = .init(datasource: datasource)
         
         // When
         let removed = try XCTUnwrap(sut?.removeSectionIfNeeded(section: 0))
@@ -139,7 +149,7 @@ class StatementPresenterTests: XCTestCase {
     // MARK: - Remove transaction tests
     func testRemoveTransaction_shouldRemoveTheCorrectTransaction() throws {
         // Given
-        sut = .init(models: [
+        let datasource = mockDatasource(with: [
             .init(date: Date(), transactions: [
                 .init(type: .income, name: "income 1", amount: 1000.0),
                 .init(type: .expense, name: "expense 1", amount: 23.5)
@@ -153,6 +163,8 @@ class StatementPresenterTests: XCTestCase {
             ])
         ])
         
+        sut = .init(datasource: datasource)
+        
         // When
         sut?.removeTransaction(indexPath: .init(row: 1, section: 2))
         
@@ -165,7 +177,8 @@ class StatementPresenterTests: XCTestCase {
     
     func testShouldAddNewAction_WhenThereIsNoPreviousTransactions_ShouldReturnTrue() throws {
         // Given
-        sut = .init(models: [])
+        let datasource = mockDatasource(with: [])
+        sut = .init(datasource: datasource)
         
         let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 10.0)
         
@@ -178,7 +191,8 @@ class StatementPresenterTests: XCTestCase {
     
     func testShouldAddNewAction_WhenTransactionDateIsNotEqualToPreviousDate_ShouldReturnTrue() throws {
         // Given
-        sut = .init(models: mockSingle(income: 10.0, expense: 20.0, date: .distantPast))
+        let datasource = mockDatasource(with: mockSingle(income: 10.0, expense: 20.0, date: .distantPast))
+        sut = .init(datasource: datasource)
         
         let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
         
@@ -191,7 +205,8 @@ class StatementPresenterTests: XCTestCase {
     
     func testShouldAddNewAction_WhenTransactionDateIsEqualToPreviousDate_ShouldReturnFalse() throws {
         // Given
-        sut = .init(models: mockSingle(income: 10.0, expense: 20.0))
+        let datasource = mockDatasource(with: mockSingle(income: 10.0, expense: 20.0))
+        sut = .init(datasource: datasource)
         
         let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
         
@@ -204,12 +219,13 @@ class StatementPresenterTests: XCTestCase {
     
     func testAddTransaction_WhenIsNewDateIsTrue_ShouldInsertNewSection() throws {
         // Given
-        sut = .init(models: mockSingle(income: 10.0, expense: 10.0))
+        let datasource = mockDatasource(with: mockSingle(income: 10.0, expense: 10.0))
+        sut = .init(datasource: datasource)
         
         let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
         
         // When
-        sut?.add(transaction, isNewDate: true)
+        sut?.addTransaction(transaction, isNewDate: true)
         
         // Then
         let newModel = try XCTUnwrap(sut?.models.first)
@@ -224,12 +240,13 @@ class StatementPresenterTests: XCTestCase {
     
     func testAddTransaction_WhenIsNewDateIsFalseAndThereIsPreviousTransaction_ShouldAddTransactionToFirstSection() throws {
         // Given
-        sut = .init(models: mockSingle(income: 10.0, expense: 10.0))
+        let datasource = mockDatasource(with: mockSingle(income: 10.0, expense: 10.0))
+        sut = .init(datasource: datasource)
         
         let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
         
         // When
-        sut?.add(transaction, isNewDate: false)
+        sut?.addTransaction(transaction, isNewDate: false)
         
         // Then
         let newTransaction = try XCTUnwrap(sut?.models.first?.transactions.first)
@@ -240,12 +257,13 @@ class StatementPresenterTests: XCTestCase {
     
     func testAddTransaction_WhenIsNewDateIsFalseAndThereIsNotPreviousTransaction_ShouldAddTransactionToFirstSection() throws {
         // Given
-        sut = .init(models: [])
+        let datasource = mockDatasource(with: [])
+        sut = .init(datasource: datasource)
         
         let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
         
         // When
-        sut?.add(transaction, isNewDate: false)
+        sut?.addTransaction(transaction, isNewDate: false)
         
         // Then
         XCTAssertNil(sut?.models.first)
@@ -254,6 +272,14 @@ class StatementPresenterTests: XCTestCase {
 
 private extension StatementPresenterTests {
     // MARK: - Mock
+    func mockDatasource(with models: [StatementModel]) -> DatasourceMock {
+        let datasource = DatasourceMock()
+        datasource.saveStatementInfo(models)
+        datasource.statementInfoMockResult = models
+
+        return datasource
+    }
+    
     func mockSingle(income: Decimal, expense: Decimal, date: Date = Date()) -> [StatementModel] {
         let incomeInput = StatementModel.Transaction(type: .income, name: "income", amount: income)
         let expenseInput = StatementModel.Transaction(type: .expense, name: "expense", amount: expense)
