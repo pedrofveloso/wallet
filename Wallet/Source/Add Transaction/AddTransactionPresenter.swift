@@ -9,11 +9,13 @@ import Foundation
 
 final class AddTransactionPresenter {
     // MARK: - Properties
-    var type: StatementModel.Transaction.Category?
-    var description: String = ""
-    var amount: Decimal = Double(0.0).toDecimal
+    private(set) var type: StatementModel.Transaction.Category?
+    private(set) var description: String = ""
+    private(set) var amount: Decimal = Double(0.0).toDecimal
  
     let availableTransactionTypes = StatementModel.Transaction.Category.allCases
+
+    private let amountUnit: Decimal = 1.0
 
     // MARK: - Type related methods
     func changedType(with index: Int) -> String {
@@ -33,13 +35,13 @@ final class AddTransactionPresenter {
     
     // MARK: - Amount related methods
     func increasedAmount() -> String {
-        amount += 100.0
+        amount += amountUnit
 
         return formattedCurrencyToPresent()
     }
 
     func decreasedAmount() -> String {
-        let newValue = amount - 100.0
+        let newValue = amount - amountUnit
 
         amount = newValue > 0 ? newValue : 0.0
 
@@ -56,12 +58,8 @@ final class AddTransactionPresenter {
     }
     
     // MARK: - Form related methods
-    func isFormValid() -> Bool {
-        type != nil && !description.isEmpty && amount > 0
-    }
-    
-    func makeTransactionModel() -> StatementModel.Transaction? {
-        guard let type = type else {
+    func getTransactionModel() -> StatementModel.Transaction? {
+        guard let type = type, !description.isEmpty, amount > 0  else {
             return nil
         }
 

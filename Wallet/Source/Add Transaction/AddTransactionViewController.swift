@@ -136,7 +136,7 @@ private extension AddTransactionViewController {
     
     // MARK: Form submission methods
     func validateForm() {
-        let isValid = presenter.isFormValid()
+        let isValid = presenter.getTransactionModel() != nil
         
         if isValid {
             submitButton.backgroundColor = .systemBlue
@@ -149,7 +149,7 @@ private extension AddTransactionViewController {
 
     @objc
     func didSubmit() {
-        guard let transaction = presenter.makeTransactionModel() else {
+        guard let transaction = presenter.getTransactionModel() else {
             return
         }
 

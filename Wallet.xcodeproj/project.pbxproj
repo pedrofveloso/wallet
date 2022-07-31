@@ -25,6 +25,7 @@
 		35967023288E0B2C00D5A737 /* StatementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967022288E0B2C00D5A737 /* StatementModel.swift */; };
 		35967025288E2C8800D5A737 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967024288E2C8800D5A737 /* Formatters.swift */; };
 		35D2B57F28959E54008B74D4 /* AddTransactionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2B57E28959E54008B74D4 /* AddTransactionPresenter.swift */; };
+		35D2B5812896BD6A008B74D4 /* AddTransactionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2B5802896BD69008B74D4 /* AddTransactionPresenterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		35967022288E0B2C00D5A737 /* StatementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementModel.swift; sourceTree = "<group>"; };
 		35967024288E2C8800D5A737 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
 		35D2B57E28959E54008B74D4 /* AddTransactionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionPresenter.swift; sourceTree = "<group>"; };
+		35D2B5802896BD69008B74D4 /* AddTransactionPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionPresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +148,7 @@
 			isa = PBXGroup;
 			children = (
 				352ED8F8288F0F7600065E19 /* StatementPresenterTests.swift */,
+				35D2B5802896BD69008B74D4 /* AddTransactionPresenterTests.swift */,
 			);
 			path = WalletTests;
 			sourceTree = "<group>";
@@ -378,6 +381,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				352ED8F9288F0F7600065E19 /* StatementPresenterTests.swift in Sources */,
+				35D2B5812896BD6A008B74D4 /* AddTransactionPresenterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
