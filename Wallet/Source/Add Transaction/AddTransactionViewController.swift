@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol AddTransactionDelegate: AnyObject {
+    func didAdd(transaction: StatementModel.Transaction)
+}
+
 class AddTransactionViewController: UIViewController {
     // MARK: - UI components
     private let contentView: UIView = {
         let view = UIView()
         view.backgroundColor = .secondarySystemBackground
         view.addCustomBorder(radius: .zero)
+
         return view
     }()
     
@@ -28,39 +33,41 @@ class AddTransactionViewController: UIViewController {
     private lazy var transactionTypeSelector: CustomTextFieldView = {
         let view = CustomTextFieldView(selector: .single)
         view.text = Strings.defaultTransactionSelection.rawValue
-        view.textEditingEnabled = false
-
         view.inputView = transactionTypePickerView
-        
+        view.textEditingEnabled = false
         view.customDelegate = self
+        
+        view.addTarget(self, action: #selector(didChangeTransactionTypeSelector), for: .editingDidEnd)
         
         return view
     }()
     
-    private let descriptionTextField: CustomTextFieldView = {
+    private lazy var descriptionTextField: CustomTextFieldView = {
         let textField = CustomTextFieldView(selector: .none)
         textField.placeholder = Strings.textFieldPlaceholder.rawValue
+        textField.customDelegate = self
+        
+        textField.addTarget(self, action: #selector(didChangeDescriptionTextField), for: .editingChanged)
+
         return textField
     }()
 
     private lazy var amountSelector: CustomTextFieldView = {
         let view = CustomTextFieldView(selector: .double)
-        
-        let currencyLabel = UILabel()
-        currencyLabel.text = Strings.currencySymbol.rawValue
-        
-        view.leftViewMode = .always
-        view.leftView = currencyLabel
-        
+        view.text = Strings.amountSelectorInitialValue.rawValue
+        view.textAlignment = .left
+        view.keyboardType = .numberPad
         view.customDelegate = self
-        view.keyboardType = .decimalPad
+        
+        view.addTarget(self, action: #selector(didChangeAmountSelectorValue), for: .editingChanged)
+        
         return view
     }()
     
     private lazy var submitButton: UIButton = {
         let button = UIButton()
         button.setTitle(Strings.submitButtonTile.rawValue, for: .normal)
-        button.backgroundColor = .systemBlue
+        button.isEnabled = false
         button.addCustomBorder(radius: 8.0)
         
         button.addTarget(self, action: #selector(didSubmit), for: .touchUpInside)
@@ -75,6 +82,10 @@ class AddTransactionViewController: UIViewController {
 
         return pickerView
     }()
+    
+    // MARK: - Properties
+    private var presenter = AddTransactionPresenter()
+    weak var delegate: AddTransactionDelegate?
     
     // MARK: - Inits
     override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
@@ -91,30 +102,59 @@ class AddTransactionViewController: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch: UITouch? = touches.first
         
-        if touch?.view != contentView && !transactionTypeSelector.isFirstResponder {
-            self.dismiss(animated: true)
-        }
+        let hasSomeFirstResponder = transactionTypeSelector.isFirstResponder || descriptionTextField.isFirstResponder || amountSelector.isFirstResponder
         
-        if transactionTypeSelector.isFirstResponder {
-            transactionTypeSelector.resignFirstResponder()
+        if touch?.view != contentView && !hasSomeFirstResponder {
+            self.dismiss(animated: true)
         }
     }
 }
 
 // MARK: - Private methods
 private extension AddTransactionViewController {
+    // MARK: Text fields change action methods
     @objc
-    func didSubmit() {
-        print("did hit button")
-        self.dismiss(animated: true)
+    func didChangeTransactionTypeSelector() {
+        let selectedIndex = transactionTypePickerView.selectedRow(inComponent: 0)
+
+        transactionTypeSelector.text = presenter.changedType(with: selectedIndex)
+    }
+
+    @objc
+    func didChangeDescriptionTextField(_ textField: UITextField) {
+        descriptionTextField.text = presenter.changedDescription(with: textField.text ?? "")
+        
+        validateForm()
     }
     
-    func shouldChangeAmountSelectorValue(text: String) -> Bool {
-        if let textAsInt = Int(text.replacingOccurrences(of: ".", with: "")) {
-            amountSelector.text = "\(Double(textAsInt)/100)"
+    @objc
+    func didChangeAmountSelectorValue(_ textField: UITextField) {
+        amountSelector.text = presenter.changeAmountIfNeeded(with: textField.text ?? "")
+        
+        validateForm()
+    }
+    
+    // MARK: Form submission methods
+    func validateForm() {
+        let isValid = presenter.isFormValid()
+        
+        if isValid {
+            submitButton.backgroundColor = .systemBlue
+        } else {
+            submitButton.backgroundColor = .systemGray4
+        }
+        
+        submitButton.isEnabled = isValid
+    }
+
+    @objc
+    func didSubmit() {
+        guard let transaction = presenter.makeTransactionModel() else {
+            return
         }
 
-        return false
+        delegate?.didAdd(transaction: transaction)
+        self.dismiss(animated: true)
     }
 }
 
@@ -160,6 +200,7 @@ extension AddTransactionViewController: ViewCodable {
     
     func buildAdditionalConfigurations() {
         view.backgroundColor = .black.withAlphaComponent(0.25)
+        validateForm()
     }
 }
 
@@ -170,54 +211,30 @@ extension AddTransactionViewController: UIPickerViewDataSource, UIPickerViewDele
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        // FIXME: Send to view model
-        StatementModel.Transaction.Category.allCases.count
+        presenter.availableTransactionTypes.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        let categories = StatementModel.Transaction.Category.allCases
-        
-        return categories[row].rawValue.capitalized
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        let categories = StatementModel.Transaction.Category.allCases
-        
-        transactionTypeSelector.text = categories[row].rawValue.capitalized
-        transactionTypeSelector.resignFirstResponder()
+        presenter.availableTransactionTypes[row].rawValue.capitalized
     }
 }
 
 // MARK: - Custom text field view delegate methods
 extension AddTransactionViewController: CustomFieldView {
     func didSelectUp(selector: CustomTextFieldView) {
-        // TODO: Use on amount selector
+        if selector == amountSelector {
+            selector.text = presenter.increasedAmount()
+            didChangeAmountSelectorValue(selector)
+        }
     }
     
     func didSelectDown(selector: CustomTextFieldView) {
         if selector == transactionTypeSelector {
-            print("Show transaction type action sheet")
-        } else {
-            // TODO: Use on amount selector
-        }
-    }
-    
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        var text = textField.text ?? ""
-        
-        if let nsRange = Range.init(range, in: text) {
-            text.replaceSubrange(nsRange, with: string)
-        }
-        
-        if textField == transactionTypeSelector {
-            return false
-            
-        }else if textField == amountSelector {
-            return shouldChangeAmountSelectorValue(text: text)
-        
-        } else {
-            return true
+            selector.becomeFirstResponder()
 
+        } else if selector == amountSelector {
+            selector.text = presenter.decreasedAmount()
+            didChangeAmountSelectorValue(selector)
         }
     }
 }
@@ -229,6 +246,6 @@ private extension AddTransactionViewController {
         case defaultTransactionSelection = "Transaction Type"
         case textFieldPlaceholder = "Transaction Description"
         case submitButtonTile = "Add"
-        case currencySymbol = "$"
+        case amountSelectorInitialValue = "$ 0,00"
     }
 }

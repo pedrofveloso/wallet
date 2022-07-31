@@ -54,6 +54,7 @@ class StatementViewController: UIViewController {
         let viewController = AddTransactionViewController()
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overFullScreen
+        viewController.delegate = self
         
         present(viewController, animated: true)
     }
@@ -134,5 +135,18 @@ extension StatementViewController: StatementTableViewProtocol {
             updateFinanceInfoCardView()
             tableView.endUpdates()
         }
+    }
+}
+
+extension StatementViewController: AddTransactionDelegate {
+    func didAdd(transaction: StatementModel.Transaction) {
+        presenter.add(transaction)
+        
+        transactionsTableView.tableView.beginUpdates()
+        //TODO: Insert new section if needed (based on current date)
+        transactionsTableView.tableView.insertRows(at: [.init(row: 0, section: 0)], with: .automatic)
+        transactionsTableView.invalidateIntrinsicContentSize()
+        updateFinanceInfoCardView()
+        transactionsTableView.tableView.endUpdates()
     }
 }
