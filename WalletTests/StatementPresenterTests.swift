@@ -162,15 +162,103 @@ class StatementPresenterTests: XCTestCase {
         XCTAssertEqual(transactions.count, 1)
         XCTAssertEqual(transaction.name, "expense 3")
     }
+    
+    func testShouldAddNewAction_WhenThereIsNoPreviousTransactions_ShouldReturnTrue() throws {
+        // Given
+        sut = .init(models: [])
+        
+        let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 10.0)
+        
+        // When
+        let shouldAddNewSection = try XCTUnwrap(sut?.shouldAddNewSection(for: transaction))
+        
+        // Then
+        XCTAssertTrue(shouldAddNewSection)
+    }
+    
+    func testShouldAddNewAction_WhenTransactionDateIsNotEqualToPreviousDate_ShouldReturnTrue() throws {
+        // Given
+        sut = .init(models: mockSingle(income: 10.0, expense: 20.0, date: .distantPast))
+        
+        let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
+        
+        // When
+        let shouldAddNewSection = try XCTUnwrap(sut?.shouldAddNewSection(for: transaction))
+        
+        // Then
+        XCTAssertTrue(shouldAddNewSection)
+    }
+    
+    func testShouldAddNewAction_WhenTransactionDateIsEqualToPreviousDate_ShouldReturnFalse() throws {
+        // Given
+        sut = .init(models: mockSingle(income: 10.0, expense: 20.0))
+        
+        let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
+        
+        // When
+        let shouldAddNewSection = try XCTUnwrap(sut?.shouldAddNewSection(for: transaction))
+        
+        // Then
+        XCTAssertFalse(shouldAddNewSection)
+    }
+    
+    func testAddTransaction_WhenIsNewDateIsTrue_ShouldInsertNewSection() throws {
+        // Given
+        sut = .init(models: mockSingle(income: 10.0, expense: 10.0))
+        
+        let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
+        
+        // When
+        sut?.add(transaction, isNewDate: true)
+        
+        // Then
+        let newModel = try XCTUnwrap(sut?.models.first)
+        let newTransaction = try XCTUnwrap(newModel.transactions.first)
+
+        XCTAssertEqual(newModel.transactions.count, 1)
+        
+        XCTAssertEqual(newTransaction.type, .expense)
+        XCTAssertEqual(newTransaction.name, "name")
+        XCTAssertEqual(newTransaction.amount, 2.0)
+    }
+    
+    func testAddTransaction_WhenIsNewDateIsFalseAndThereIsPreviousTransaction_ShouldAddTransactionToFirstSection() throws {
+        // Given
+        sut = .init(models: mockSingle(income: 10.0, expense: 10.0))
+        
+        let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
+        
+        // When
+        sut?.add(transaction, isNewDate: false)
+        
+        // Then
+        let newTransaction = try XCTUnwrap(sut?.models.first?.transactions.first)
+        XCTAssertEqual(newTransaction.type, .expense)
+        XCTAssertEqual(newTransaction.name, "name")
+        XCTAssertEqual(newTransaction.amount, 2.0)
+    }
+    
+    func testAddTransaction_WhenIsNewDateIsFalseAndThereIsNotPreviousTransaction_ShouldAddTransactionToFirstSection() throws {
+        // Given
+        sut = .init(models: [])
+        
+        let transaction = StatementModel.Transaction(type: .expense, name: "name", amount: 2.0)
+        
+        // When
+        sut?.add(transaction, isNewDate: false)
+        
+        // Then
+        XCTAssertNil(sut?.models.first)
+    }
 }
 
 private extension StatementPresenterTests {
     // MARK: - Mock
-    func mockSingle(income: Decimal, expense: Decimal) -> [StatementModel] {
+    func mockSingle(income: Decimal, expense: Decimal, date: Date = Date()) -> [StatementModel] {
         let incomeInput = StatementModel.Transaction(type: .income, name: "income", amount: income)
         let expenseInput = StatementModel.Transaction(type: .expense, name: "expense", amount: expense)
         
-        return [.init(date: Date(), transactions: [incomeInput, expenseInput])]
+        return [.init(date: date, transactions: [incomeInput, expenseInput])]
     }
     
     // MARK: - Assert utility methods

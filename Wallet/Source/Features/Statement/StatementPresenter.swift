@@ -9,7 +9,7 @@ import Foundation
 
 final class StatementPresenter {
     // MARK: - Properties
-    var models: [StatementModel] {
+    private(set) var models: [StatementModel] {
         didSet {
             totalIncome = calculateTotalAmount(for: .income)
             totalExpenses = calculateTotalAmount(for: .expense)

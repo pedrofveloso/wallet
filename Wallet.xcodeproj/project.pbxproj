@@ -147,8 +147,8 @@
 		359636AB288BC5BD00DBF5E6 /* WalletTests */ = {
 			isa = PBXGroup;
 			children = (
-				352ED8F8288F0F7600065E19 /* StatementPresenterTests.swift */,
 				35D2B5802896BD69008B74D4 /* AddTransactionPresenterTests.swift */,
+				352ED8F8288F0F7600065E19 /* StatementPresenterTests.swift */,
 			);
 			path = WalletTests;
 			sourceTree = "<group>";
