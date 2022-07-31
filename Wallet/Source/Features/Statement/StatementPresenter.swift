@@ -9,7 +9,7 @@ import Foundation
 
 final class StatementPresenter {
     // MARK: - Properties
-    var models: [StatementModel] {
+    private(set) var models: [StatementModel] {
         didSet {
             totalIncome = calculateTotalAmount(for: .income)
             totalExpenses = calculateTotalAmount(for: .expense)
@@ -59,21 +59,40 @@ final class StatementPresenter {
         models[indexPath.section].transactions.remove(at: indexPath.row)
     }
     
-    func add(_ transaction: StatementModel.Transaction) {
-        // TODO: Insert using current date
-        models[0].transactions.insert(transaction, at: 0)
+    func shouldAddNewSection(for transaction: StatementModel.Transaction) -> Bool {
+        guard let lastTransactionDate = models.first?.date,
+              Calendar.current.isDate(Date(), inSameDayAs: lastTransactionDate) else {
+            return true
+        }
+        
+        return false
+    }
+    
+    func add(_ transaction: StatementModel.Transaction, isNewDate: Bool) {
+        isNewDate ? addNewStatementEntry(with: transaction) : addNewTransaction(transaction)
     }
 }
 
 // MARK: - Private methods
 private extension StatementPresenter {
-    private func calculateTotalAmount(for type: StatementModel.Transaction.Category) -> Decimal {
+    func calculateTotalAmount(for type: StatementModel.Transaction.Category) -> Decimal {
         models
             .flatMap({ $0.transactions })
             .reduce(.zero, { partialResult, transaction in
                 let value = transaction.type == type ? transaction.amount : .zero
                 return partialResult + value
             })
+    }
+    
+    func addNewStatementEntry(with transaction: StatementModel.Transaction) {
+        let statement = StatementModel(date: Date(), transactions: [transaction])
+        models.insert(statement, at: 0)
+    }
+    
+    func addNewTransaction(_ transaction: StatementModel.Transaction) {
+        if !models.isEmpty {
+            models[0].transactions.insert(transaction, at: 0)
+        }
     }
 }
 
