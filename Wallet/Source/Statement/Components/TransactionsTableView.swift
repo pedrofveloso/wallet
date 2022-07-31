@@ -12,12 +12,12 @@ typealias StatementTableViewProtocol = UITableViewDataSource & UITableViewDelega
 class TransactionsTableView: UIView {
     static let cellID = "statementCellIdentifier"
     
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         
         tableView.dataSource = parent
         tableView.delegate = parent
-        
+
         return tableView
     }()
     
@@ -54,6 +54,5 @@ extension TransactionsTableView: ViewCodable {
         translatesAutoresizingMaskIntoConstraints = false
         
         addCustomBorder()
-        
     }
 }

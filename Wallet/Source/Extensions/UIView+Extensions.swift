@@ -9,10 +9,10 @@ import UIKit
 
 // MARK: - Style
 extension UIView {
-    func addCustomBorder() {
+    func addCustomBorder(radius: CGFloat = 16.0) {
         layer.borderColor = UIColor.separator.cgColor
         layer.borderWidth = 1.0
-        layer.cornerRadius = 16.0
+        layer.cornerRadius = radius
         clipsToBounds = true
     }
 }
@@ -39,6 +39,24 @@ extension UIView {
     }
     
     // MARK: - Position
+    @discardableResult
+    func centerY(to anchor: NSLayoutYAxisAnchor) -> UIView {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        centerYAnchor.constraint(equalTo: anchor).isActive = true
+        
+        return self
+    }
+    
+    @discardableResult
+    func centerX(to anchor: NSLayoutXAxisAnchor) -> UIView {
+        translatesAutoresizingMaskIntoConstraints = false
+        
+        centerXAnchor.constraint(equalTo: anchor).isActive = true
+        
+        return self
+    }
+    
     @discardableResult
     func top(to anchor: NSLayoutYAxisAnchor, constant: CGFloat = 0.0) -> UIView {
         translatesAutoresizingMaskIntoConstraints = false

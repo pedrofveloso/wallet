@@ -58,6 +58,11 @@ final class StatementPresenter {
     func removeTransaction(indexPath: IndexPath) {
         models[indexPath.section].transactions.remove(at: indexPath.row)
     }
+    
+    func add(_ transaction: StatementModel.Transaction) {
+        // TODO: Insert using current date
+        models[0].transactions.insert(transaction, at: 0)
+    }
 }
 
 // MARK: - Private methods

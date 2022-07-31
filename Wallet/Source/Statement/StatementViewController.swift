@@ -12,6 +12,16 @@ class StatementViewController: UIViewController {
     private let financeInfoCardView = FinanceInfoCardView()
     private lazy var transactionsTableView = TransactionsTableView(parent: self)
     
+    private lazy var addTransactionButton: UIButton = {
+        let button = UIButton(type: .contactAdd)
+        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .fill
+        
+        button.addTarget(self, action: #selector(openAddTransactionModal), for: .touchUpInside)
+        
+        return button
+    }()
+    
     // MARK: - Properties
     private var presenter = StatementPresenter()
 
@@ -38,6 +48,16 @@ class StatementViewController: UIViewController {
         financeInfoCardView.set(balance: presenter.balance.asCurrency)
         financeInfoCardView.set(progress: presenter.balanceProgress)
     }
+    
+    @objc
+    private func openAddTransactionModal() {
+        let viewController = AddTransactionViewController()
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.delegate = self
+        
+        present(viewController, animated: true)
+    }
 }
 
 // MARK: - View codable methods
@@ -45,6 +65,7 @@ extension StatementViewController: ViewCodable {
     func buildHierarchy() {
         view.addSubview(financeInfoCardView)
         view.addSubview(transactionsTableView)
+        view.addSubview(addTransactionButton)
     }
     
     func buildConstraints() {
@@ -56,6 +77,12 @@ extension StatementViewController: ViewCodable {
             .top(to: financeInfoCardView.bottomAnchor, constant: 24.0)
             .horizontals(to: view, constant: 24.0)
             .bottom(to: view.safeAreaLayoutGuide.bottomAnchor, constant: 24.0, makeLessThanOrEqual: true)
+        
+        addTransactionButton
+            .height(72.0)
+            .width(72.0)
+            .trailing(to: view.trailingAnchor, constant: 24.0)
+            .bottom(to: view.safeAreaLayoutGuide.bottomAnchor, constant: 24.0)
     }
     
     func buildAdditionalConfigurations() {
@@ -108,5 +135,18 @@ extension StatementViewController: StatementTableViewProtocol {
             updateFinanceInfoCardView()
             tableView.endUpdates()
         }
+    }
+}
+
+extension StatementViewController: AddTransactionDelegate {
+    func didAdd(transaction: StatementModel.Transaction) {
+        presenter.add(transaction)
+        
+        transactionsTableView.tableView.beginUpdates()
+        //TODO: Insert new section if needed (based on current date)
+        transactionsTableView.tableView.insertRows(at: [.init(row: 0, section: 0)], with: .automatic)
+        transactionsTableView.invalidateIntrinsicContentSize()
+        updateFinanceInfoCardView()
+        transactionsTableView.tableView.endUpdates()
     }
 }
