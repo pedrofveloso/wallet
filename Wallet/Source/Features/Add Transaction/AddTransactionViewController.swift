@@ -18,6 +18,8 @@ class AddTransactionViewController: UIViewController {
         view.backgroundColor = .secondarySystemBackground
         view.addCustomBorder(radius: .zero)
 
+        view.accessibilityIdentifier = AccessibilityId.contentView.rawValue
+        
         return view
     }()
     
@@ -26,6 +28,8 @@ class AddTransactionViewController: UIViewController {
         label.text = Strings.title.rawValue
         label.textAlignment = .center
         label.font = .preferredFont(forTextStyle: .title3)
+        
+        label.accessibilityIdentifier = AccessibilityId.titleLabel.rawValue
         
         return label
     }()
@@ -39,6 +43,8 @@ class AddTransactionViewController: UIViewController {
         
         view.addTarget(self, action: #selector(didChangeTransactionTypeSelector), for: .editingDidEnd)
         
+        view.accessibilityIdentifier = AccessibilityId.transactionTypeSelector.rawValue
+        
         return view
     }()
     
@@ -48,6 +54,8 @@ class AddTransactionViewController: UIViewController {
         textField.customDelegate = self
         
         textField.addTarget(self, action: #selector(didChangeDescriptionTextField), for: .editingChanged)
+        
+        textField.accessibilityIdentifier = AccessibilityId.descriptionTextField.rawValue
 
         return textField
     }()
@@ -61,6 +69,8 @@ class AddTransactionViewController: UIViewController {
         
         view.addTarget(self, action: #selector(didChangeAmountSelectorValue), for: .editingChanged)
         
+        view.accessibilityIdentifier = AccessibilityId.amountSelector.rawValue
+        
         return view
     }()
     
@@ -72,6 +82,8 @@ class AddTransactionViewController: UIViewController {
         
         button.addTarget(self, action: #selector(didSubmit), for: .touchUpInside)
         
+        button.accessibilityIdentifier = AccessibilityId.submitButton.rawValue
+        
         return button
     }()
     
@@ -80,6 +92,8 @@ class AddTransactionViewController: UIViewController {
         pickerView.dataSource = self
         pickerView.delegate = self
 
+        pickerView.accessibilityIdentifier = AccessibilityId.transactionTypePickerView.rawValue
+        
         return pickerView
     }()
     
@@ -240,13 +254,24 @@ extension AddTransactionViewController: CustomFieldView {
     }
 }
 
-// MARK: - Strings
 private extension AddTransactionViewController {
+    // MARK: - Strings
     enum Strings: String {
         case title = "Add Transaction"
         case defaultTransactionSelection = "Transaction Type"
         case textFieldPlaceholder = "Transaction Description"
         case submitButtonTile = "Add"
         case amountSelectorInitialValue = "$ 0,00"
+    }
+    
+    // MARK: - Accessibility identifiers
+    enum AccessibilityId: String {
+        case contentView
+        case titleLabel
+        case transactionTypeSelector
+        case descriptionTextField
+        case amountSelector
+        case submitButton
+        case transactionTypePickerView
     }
 }

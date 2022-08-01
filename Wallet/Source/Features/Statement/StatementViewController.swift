@@ -9,8 +9,21 @@ import UIKit
 
 class StatementViewController: UIViewController {
     // MARK: - UI Components
-    private let financeInfoCardView = FinanceInfoCardView()
-    private lazy var transactionsTableView = TransactionsTableView(parent: self)
+    private let financeInfoCardView: FinanceInfoCardView = {
+        let view = FinanceInfoCardView()
+        
+        view.accessibilityIdentifier = AccessibilityId.financialInfoCardView.rawValue
+        
+        return view
+    }()
+
+    private lazy var transactionsTableView: TransactionsTableView = {
+        let view = TransactionsTableView(parent: self)
+        
+        view.accessibilityIdentifier = AccessibilityId.transactionTableView.rawValue
+        
+        return view
+    }()
     
     private lazy var addTransactionButton: UIButton = {
         let button = UIButton(type: .contactAdd)
@@ -18,6 +31,8 @@ class StatementViewController: UIViewController {
         button.contentVerticalAlignment = .fill
         
         button.addTarget(self, action: #selector(openAddTransactionModal), for: .touchUpInside)
+        
+        button.accessibilityIdentifier = AccessibilityId.addTransactionButton.rawValue
         
         return button
     }()
@@ -142,6 +157,7 @@ extension StatementViewController: StatementTableViewProtocol {
     }
 }
 
+// MARK: - Add transaction delegate methods
 extension StatementViewController: AddTransactionDelegate {
     func didAdd(transaction: StatementModel.Transaction) {
         let isNewDate = presenter.shouldAddNewSection(for: transaction)
@@ -159,5 +175,14 @@ extension StatementViewController: AddTransactionDelegate {
         updateFinanceInfoCardView()
 
         transactionsTableView.tableView.endUpdates()
+    }
+}
+
+// MARK: - Accessibility identifiers
+private extension StatementViewController {
+    enum AccessibilityId: String {
+        case financialInfoCardView
+        case transactionTableView
+        case addTransactionButton
     }
 }
