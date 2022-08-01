@@ -161,8 +161,8 @@
 		359636B5288BC5BD00DBF5E6 /* WalletUITests */ = {
 			isa = PBXGroup;
 			children = (
-				359636B6288BC5BD00DBF5E6 /* WalletUITests.swift */,
 				35B35D9628976E82003C1EBE /* WalletRobot.swift */,
+				359636B6288BC5BD00DBF5E6 /* WalletUITests.swift */,
 			);
 			path = WalletUITests;
 			sourceTree = "<group>";
