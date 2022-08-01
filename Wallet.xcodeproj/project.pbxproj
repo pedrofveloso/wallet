@@ -23,6 +23,7 @@
 		3596701F288E0AF000D5A737 /* StatementPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3596701E288E0AF000D5A737 /* StatementPresenter.swift */; };
 		35967023288E0B2C00D5A737 /* StatementModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967022288E0B2C00D5A737 /* StatementModel.swift */; };
 		35967025288E2C8800D5A737 /* Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35967024288E2C8800D5A737 /* Formatters.swift */; };
+		35B35D9728976E82003C1EBE /* WalletRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35B35D9628976E82003C1EBE /* WalletRobot.swift */; };
 		35D2B57F28959E54008B74D4 /* AddTransactionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2B57E28959E54008B74D4 /* AddTransactionPresenter.swift */; };
 		35D2B5812896BD6A008B74D4 /* AddTransactionPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2B5802896BD69008B74D4 /* AddTransactionPresenterTests.swift */; };
 		35D2B58728970359008B74D4 /* Datasource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35D2B58628970359008B74D4 /* Datasource.swift */; };
@@ -67,6 +68,7 @@
 		3596701E288E0AF000D5A737 /* StatementPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementPresenter.swift; sourceTree = "<group>"; };
 		35967022288E0B2C00D5A737 /* StatementModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatementModel.swift; sourceTree = "<group>"; };
 		35967024288E2C8800D5A737 /* Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatters.swift; sourceTree = "<group>"; };
+		35B35D9628976E82003C1EBE /* WalletRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletRobot.swift; sourceTree = "<group>"; };
 		35D2B57E28959E54008B74D4 /* AddTransactionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionPresenter.swift; sourceTree = "<group>"; };
 		35D2B5802896BD69008B74D4 /* AddTransactionPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionPresenterTests.swift; sourceTree = "<group>"; };
 		35D2B58628970359008B74D4 /* Datasource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Datasource.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				359636B6288BC5BD00DBF5E6 /* WalletUITests.swift */,
+				35B35D9628976E82003C1EBE /* WalletRobot.swift */,
 			);
 			path = WalletUITests;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				359636B7288BC5BD00DBF5E6 /* WalletUITests.swift in Sources */,
+				35B35D9728976E82003C1EBE /* WalletRobot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
