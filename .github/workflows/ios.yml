@@ -1,6 +1,9 @@
 name: unit/ui tests 
 
 on:
+  push:
+    branchs: ["main"]
+
   pull_request:
     branches: [ "main" ]
 
