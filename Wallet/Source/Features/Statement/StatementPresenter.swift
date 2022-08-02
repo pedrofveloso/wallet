@@ -15,10 +15,8 @@ final class StatementPresenter {
         didSet {
             totalIncome = calculateTotalAmount(for: .income)
             totalExpenses = calculateTotalAmount(for: .expense)
-            
-            DispatchQueue.main.async {
-                self.datasource.saveStatementInfo(self.models)
-            }
+
+            datasource.saveStatementInfo(models)
         }
     }
 
@@ -86,7 +84,8 @@ private extension StatementPresenter {
         models
             .flatMap({ $0.transactions })
             .reduce(.zero, { partialResult, transaction in
-                let value = transaction.type == type ? transaction.amount : .zero
+                let isSameType = transaction.type == type
+                let value = isSameType ? transaction.amount : .zero
                 return partialResult + value
             })
     }
@@ -102,24 +101,3 @@ private extension StatementPresenter {
         }
     }
 }
-
-// FIXME: - Remove mock
-let mock: [StatementModel] = [.init(
-    date: Date(),
-    transactions: [
-        .init(type: .expense,
-              name: "Coffee from StarBucks",
-              amount: .init(7)),
-        .init(type: .expense, name: "Grocery from Nestor's", amount: .init(56)),
-        .init(type: .income, name: "Salary", amount: .init(1000)),
-        .init(type: .expense, name: "Food take out", amount: .init(57)),
-    ]
-),
-.init(
-    date: Date(timeIntervalSince1970: 1658547770000),
-    transactions: [
-        .init(type: .expense,
-              name: "Phone bill",
-              amount: .init(90))
-    ]
-)]

@@ -23,7 +23,7 @@ extension Decimal {
         let amount = formatter.number(from: self.description) ?? .init(value: 0.0)
         
         formatter.currencySymbol = "$"
-        formatter.numberStyle = .currencyAccounting
+        formatter.numberStyle = .currency
         
         return formatter.string(from: amount) ?? "0"
     }

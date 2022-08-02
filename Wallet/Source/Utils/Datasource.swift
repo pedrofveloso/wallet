@@ -17,12 +17,19 @@ final class Datasource {
     
     private let key = "ud-statement-info-key"
     
-    private init() {}
+    private var instance: UserDefaults? = .standard
+    
+    private init() {
+        if ProcessInfo.processInfo.arguments.contains("-runningUITests") {
+            instance = .init(suiteName: "ui-testing")
+            instance?.removeObject(forKey: key)
+        }
+    }
 }
 
 extension Datasource: DatasourceProtocol {
     func fetchStatementInfo() -> [StatementModel] {
-        guard let data = UserDefaults.standard.data(forKey: key) else {
+        guard let data = instance?.data(forKey: key) else {
             return []
         }
         
@@ -32,7 +39,7 @@ extension Datasource: DatasourceProtocol {
     
     func saveStatementInfo(_ models: [StatementModel]) {
         if let data = try? JSONEncoder().encode(models) {
-            UserDefaults.standard.set(data, forKey: key)
+            instance?.set(data, forKey: key)
         }
     }
 }

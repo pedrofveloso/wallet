@@ -19,6 +19,8 @@ final class CustomTextFieldView: UITextField {
         button.setImage(.init(systemName: "chevron.up"), for: .normal)
         button.addTarget(self, action: #selector(didSelectUp), for: .touchUpInside)
         
+        button.accessibilityIdentifier = AccessibilityId.upSelector.rawValue
+        
         return button
     }
     
@@ -26,6 +28,8 @@ final class CustomTextFieldView: UITextField {
         let button = UIButton()
         button.setImage(.init(systemName: "chevron.down"), for: .normal)
         button.addTarget(self, action: #selector(didSelectDown), for: .touchUpInside)
+        
+        button.accessibilityIdentifier = AccessibilityId.downSelector.rawValue
         
         return button
     }
@@ -165,10 +169,16 @@ extension CustomTextFieldView {
     }
 }
 
-// MARK: - Strings
 private extension CustomTextFieldView {
+    // MARK: - Strings
     enum Strings: String {
         case okButton = "OK"
         case cancelButton = "Cancel"
+    }
+    
+    // MARK: - Accessibility identifiers
+    enum AccessibilityId: String {
+        case upSelector
+        case downSelector
     }
 }
