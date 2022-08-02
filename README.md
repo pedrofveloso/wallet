@@ -14,3 +14,20 @@ This project provides two lanes which executes unit tests and ui tests.
 
 To execute them, just open the terminal in the project root folder and run these commands.
 
+## MVP -> Model View Presenter
+This project is using MVP architecture.
+
+The View (ViewController) layer is responsible for display the layout and control actions received/triggered by its components.
+The Model layer is responsible is responsible for map the entity used by the features.
+The Presenter is responsible for apply business logics and treat the data that will be displayed by the view.
+
+## Features
+### Statement
+This feature is responsible for list all the transactions added by the user. It segregates these transactions by date to improve legibility.
+
+The user can **add** a transaction through the button at the right bottom of the screen.
+To **delete** a transaction just swipe left over the transaction cell.
+
+### Add Transaction
+In order to add a transaction the use needs to fill the **add transaction form**.
+This form is presented as modal, and can be dismissed by hitting anywhere outside of the form view.
