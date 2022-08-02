@@ -7,6 +7,16 @@
 
 import Foundation
 
+protocol AddTransactionPresenterProtocol: AnyObject {
+    var availableTransactionTypes: [StatementModel.Transaction.Category] { get }
+    func changedType(with index: Int) -> String
+    func changedDescription(with text: String) -> String
+    func increasedAmount() -> String
+    func decreasedAmount() -> String
+    func changeAmountIfNeeded(with text: String) -> String
+    func getTransactionModel() -> StatementModel.Transaction?
+}
+
 final class AddTransactionPresenter {
     // MARK: - Properties
     private(set) var type: StatementModel.Transaction.Category?
@@ -17,6 +27,9 @@ final class AddTransactionPresenter {
 
     private let amountUnit: Decimal = 1.0
 
+}
+
+extension AddTransactionPresenter: AddTransactionPresenterProtocol {
     // MARK: - Type related methods
     func changedType(with index: Int) -> String {
         let selectedType = availableTransactionTypes[index]

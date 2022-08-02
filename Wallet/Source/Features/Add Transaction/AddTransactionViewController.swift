@@ -34,7 +34,7 @@ class AddTransactionViewController: UIViewController {
         return label
     }()
     
-    private lazy var transactionTypeSelector: CustomTextFieldView = {
+    private(set) lazy var transactionTypeSelector: CustomTextFieldView = {
         let view = CustomTextFieldView(selector: .single)
         view.text = Strings.defaultTransactionSelection.rawValue
         view.inputView = transactionTypePickerView
@@ -48,7 +48,7 @@ class AddTransactionViewController: UIViewController {
         return view
     }()
     
-    private lazy var descriptionTextField: CustomTextFieldView = {
+    private(set) lazy var descriptionTextField: CustomTextFieldView = {
         let textField = CustomTextFieldView(selector: .none)
         textField.placeholder = Strings.textFieldPlaceholder.rawValue
         textField.customDelegate = self
@@ -60,7 +60,7 @@ class AddTransactionViewController: UIViewController {
         return textField
     }()
 
-    private lazy var amountSelector: CustomTextFieldView = {
+    private(set) lazy var amountSelector: CustomTextFieldView = {
         let view = CustomTextFieldView(selector: .double)
         view.text = Strings.amountSelectorInitialValue.rawValue
         view.textAlignment = .left
@@ -98,12 +98,13 @@ class AddTransactionViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    private var presenter = AddTransactionPresenter()
+    private var presenter: AddTransactionPresenterProtocol
     weak var delegate: AddTransactionDelegate?
     
     // MARK: - Inits
-    override init(nibName nibNameOrNil: String? = nil, bundle nibBundleOrNil: Bundle? = nil) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    init(presenter: AddTransactionPresenterProtocol = AddTransactionPresenter()) {
+        self.presenter = presenter
+        super.init(nibName: nil, bundle: nil)
         buildViewCode()
     }
     
@@ -239,7 +240,7 @@ extension AddTransactionViewController: CustomFieldView {
     func didSelectUp(selector: CustomTextFieldView) {
         if selector == amountSelector {
             selector.text = presenter.increasedAmount()
-            didChangeAmountSelectorValue(selector)
+            validateForm()
         }
     }
     
@@ -249,7 +250,7 @@ extension AddTransactionViewController: CustomFieldView {
 
         } else if selector == amountSelector {
             selector.text = presenter.decreasedAmount()
-            didChangeAmountSelectorValue(selector)
+            validateForm()
         }
     }
 }
