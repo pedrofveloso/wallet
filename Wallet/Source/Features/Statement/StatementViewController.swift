@@ -38,11 +38,11 @@ class StatementViewController: UIViewController {
     }()
     
     // MARK: - Properties
-    private var presenter: StatementPresenter
+    private var presenter: StatementPresenterProtocol
 
     // MARK: - Inits
-    init(datasource: DatasourceProtocol) {
-        presenter = .init(datasource: datasource)
+    init(presenter: StatementPresenterProtocol) {
+        self.presenter = presenter
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -112,16 +112,16 @@ extension StatementViewController: ViewCodable {
 extension StatementViewController: StatementTableViewProtocol {
     // MARK: - Section
     func numberOfSections(in tableView: UITableView) -> Int {
-        presenter.models.count
+        presenter.numberOfDates
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        presenter.models[section].date.asString
+        presenter.stringForDate(section)
     }
     
     // MARK: - Cell
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter.models[section].transactions.count
+        presenter.numberOfTransactions(for: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
