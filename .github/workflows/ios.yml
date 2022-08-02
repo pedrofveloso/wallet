@@ -13,16 +13,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up ruby env
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7.2
-          bundler-cache: true
-
       - name: Running unit tests
-        run: |
-          bundle exec fastlane unit_tests
-
+        uses: maierj/fastlane-action@v2.2.0
+        with:
+          lane: unit_tests
+     
       - name: Running UI tests
-        run: |
-          bundle exec fastlane ui_tests
+        uses: maierj/fastlane-action@v2.2.0
+        with:
+          lane: ui_tests
