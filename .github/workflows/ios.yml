@@ -2,10 +2,13 @@ name: unit/ui tests
 
 on:
   push:
-    branchs: ["main"]
+    branches: [ "main" ]
 
   pull_request:
     branches: [ "main" ]
+  
+  repository_dispatch:
+    types: api-run
 
   workflow_dispatch:
 
