@@ -15,7 +15,7 @@ on:
 jobs:
   build:
     name: Unit & UI Tests
-    runs-on: macos-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
